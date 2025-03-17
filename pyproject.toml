@@ -1,0 +1,26 @@
+[project]
+name = "pymultirun"
+version = "0.1.0"
+description = "A multi-process runtime library with health checks"
+authors = [
+    { name = "vvanglro", email = "vvanglro@gmail.com" }
+]
+requires-python = ">=3.9"
+license = "MIT"
+readme = "README.md"
+dependencies = [
+    "click>=8.1.8",
+]
+
+[project.urls]
+Homepage = "https://github.com/vvanglro/pymultirun"
+
+[project.scripts]
+multirun = "multirun:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["multirun"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
