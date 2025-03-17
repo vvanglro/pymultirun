@@ -1,3 +1,5 @@
+[![Package version](https://badge.fury.io/py/pymultirun.svg)](https://pypi.python.org/pypi/pymultirun)
+
 ## multirun
 A multi-process runtime library with health checks, Excerpted from uvicorn.
 
