@@ -5,8 +5,7 @@ import os
 import signal
 import threading
 from multiprocessing import Pipe, Process as _Process
-from typing import Any, Callable
-
+from typing import Any, Callable, Optional
 
 LOG_LEVELS: dict[str, int] = {
     "critical": logging.CRITICAL,
@@ -24,9 +23,10 @@ SIGNALS = {
 
 logger = logging.getLogger("multirun")
 
+
 def configure_logging(level: str | int):
     handler = logging.StreamHandler()
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     logger.setLevel(level)
@@ -34,10 +34,10 @@ def configure_logging(level: str | int):
 
 class Process:
     def __init__(
-            self,
-            target: Callable[..., Any],
-            args: tuple[Any, ...] = (),
-            kwargs: dict[str, Any] = None,
+        self,
+        target: Callable[..., Any],
+        args: tuple[Any, ...] = (),
+        kwargs: Optional[dict[str, Any]] = None,
     ) -> None:
         self.real_target = target
         self.args = args
@@ -115,12 +115,12 @@ class Process:
 
 class Multiprocess:
     def __init__(
-            self,
-            target: Callable[..., Any],
-            workers: int = 1,
-            timeout: float = 5,
-            args: tuple[Any, ...] = (),
-            kwargs: dict[str, Any] = None,
+        self,
+        target: Callable[..., Any],
+        workers: int = 1,
+        timeout: float = 5,
+        args: tuple[Any, ...] = (),
+        kwargs: Optional[dict[str, Any]] = None,
     ) -> None:
         """
         Initialize a multi-process manager to run a target function in multiple worker processes.
@@ -262,12 +262,12 @@ class Multiprocess:
 
 
 def run_multiprocess(
-        target: Callable[..., Any],
-        workers: int = 1,
-        log_level: str = None,
-        timeout: int = 5,
-        args: tuple[Any, ...] = (),
-        kwargs: dict[str, Any] = None,
+    target: Callable[..., Any],
+    workers: int = 1,
+    log_level: Optional[str | int] = None,
+    timeout: int = 5,
+    args: tuple[Any, ...] = (),
+    kwargs: Optional[dict[str, Any]] = None,
 ) -> None:
     """
     Run a function in multiple worker processes with monitoring and process management.
@@ -283,7 +283,7 @@ def run_multiprocess(
     Example:
         ```python
         def my_worker(name, count=1):
-            print(f"Worker {name} started with count {count}")
+            pprint(f"Worker {name} started with count {count}")
             # Worker logic here
 
         # Run 4 workers with arguments
@@ -297,7 +297,7 @@ def run_multiprocess(
     """
     if not log_level:
         log_level = logging.INFO
-    else:
+    if isinstance(log_level, str):
         log_level = LOG_LEVELS.get(log_level, logging.INFO)
 
     configure_logging(log_level)

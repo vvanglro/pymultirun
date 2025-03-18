@@ -24,3 +24,12 @@ packages = ["multirun"]
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.1.0",
+]
+
+[tool.ruff]
+line-length = 130
+target-version = "py39"

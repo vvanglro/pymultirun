@@ -36,6 +36,7 @@ def add_cwd_in_path() -> Generator[None, None, None]:
             except ValueError:
                 logger.warning(f"Cannot remove '{cwd}' from sys.path")
 
+
 def import_from_string(import_str: Any) -> Any:
     if not isinstance(import_str, str):
         return import_str
