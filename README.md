@@ -57,6 +57,8 @@ def worker(sock: socket.socket) -> None:
 
     try:
         loop.run_until_complete(main(sock))
+    except KeyboardInterrupt:
+        pass
     finally:
         loop.close()
 

@@ -44,7 +44,7 @@ class Process:
         self.kwargs = kwargs or {}
 
         self.parent_conn, self.child_conn = Pipe()
-        self.process = _Process(target=self.target, daemon=True)
+        self.process = _Process(target=self.target)
 
     def ping(self, timeout: float = 5) -> bool:
         self.parent_conn.send(b"ping")
@@ -303,4 +303,8 @@ def run_multiprocess(
     configure_logging(log_level)
 
     mp = Multiprocess(target, workers, timeout, args, kwargs or {})
-    mp.run()
+    try:
+        mp.run()
+    except KeyboardInterrupt:
+        print('KeyboardInterrupt')
+
