@@ -303,8 +303,4 @@ def run_multiprocess(
     configure_logging(log_level)
 
     mp = Multiprocess(target, workers, timeout, args, kwargs or {})
-    try:
-        mp.run()
-    except KeyboardInterrupt:
-        print('KeyboardInterrupt')
-
+    mp.run()
