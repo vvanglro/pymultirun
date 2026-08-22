@@ -8,7 +8,7 @@ import click
 
 from multirun import run_multiprocess
 from multirun.core import LOG_LEVELS
-from multirun.importer import import_from_string, add_cwd_in_path
+from multirun.importer import add_cwd_in_path, import_from_string
 
 LEVEL_CHOICES = click.Choice(list(LOG_LEVELS.keys()))
 

@@ -4,7 +4,8 @@ import logging
 import os
 import signal
 import threading
-from multiprocessing import Pipe, Process as _Process
+from multiprocessing import Pipe
+from multiprocessing import Process as _Process
 from typing import Any, Callable, Optional
 
 LOG_LEVELS: dict[str, int] = {
@@ -17,7 +18,7 @@ LOG_LEVELS: dict[str, int] = {
 
 SIGNALS = {
     getattr(signal, f"SIG{x}"): x
-    for x in "INT TERM BREAK HUP QUIT TTIN TTOU USR1 USR2 WINCH".split()
+    for x in ["INT", "TERM", "BREAK", "HUP", "QUIT", "TTIN", "TTOU", "USR1", "USR2", "WINCH"]
     if hasattr(signal, f"SIG{x}")
 }
 
