@@ -26,10 +26,11 @@ import socket
 from multirun import run_multiprocess
 import asyncio
 
+
 async def handle_echo(reader, writer):
     data = await reader.read(100)
     message = data.decode()
-    addr = writer.get_extra_info('peername')
+    addr = writer.get_extra_info("peername")
 
     print(f"Received {message!r} from {addr!r}")
 
@@ -41,15 +42,16 @@ async def handle_echo(reader, writer):
     writer.close()
     await writer.wait_closed()
 
-async def main(sock: socket.socket):
-    server = await asyncio.start_server(
-        handle_echo, sock=sock)
 
-    addrs = ', '.join(str(sock.getsockname()) for sock in server.sockets)
-    print(f'Serving on {addrs}')
+async def main(sock: socket.socket):
+    server = await asyncio.start_server(handle_echo, sock=sock)
+
+    addrs = ", ".join(str(sock.getsockname()) for sock in server.sockets)
+    print(f"Serving on {addrs}")
 
     async with server:
         await server.serve_forever()
+
 
 def worker(sock: socket.socket) -> None:
     loop: asyncio.AbstractEventLoop = asyncio.new_event_loop()
@@ -63,12 +65,12 @@ def worker(sock: socket.socket) -> None:
         loop.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     with socket.socket(socket.AF_INET6, socket.SOCK_STREAM) as sock:
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_V6ONLY, 0)
         sock.bind(("::", 8888))
-        run_multiprocess(worker, workers=2, args=(sock, ))
+        run_multiprocess(worker, workers=2, args=(sock,))
 ```
 
 You can also use the command line, in `example.py`:
@@ -77,7 +79,8 @@ You can also use the command line, in `example.py`:
 import os
 import time
 
-def worker_function(name: str, age:int, sleep_time=1, **kwargs):
+
+def worker_function(name: str, age: int, sleep_time=1, **kwargs):
     pid = os.getpid()
     count = 0
     print(f"Name {name}, Age {age}, Kwargs {kwargs}.")
